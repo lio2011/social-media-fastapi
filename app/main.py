@@ -4,15 +4,17 @@ from .database import engine
 from .routers import post,user,auth,vote
 from .config import settings
 from fastapi.middleware.cors import CORSMiddleware
+from .config import settings
 
 models.Base.metadata.create_all(bind=engine)
 
+print(settings.database_hostname)
 
 app = FastAPI()
 
 origins = ["*"]
 
-app.app_middleware(
+app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
@@ -28,4 +30,4 @@ app.include_router(vote.router)
 
 @app.get("/")
 async def root():
-    return {"message": "Hello World"}
+    return {"message": "Hello World!!!"}
